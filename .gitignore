@@ -1,5 +1,24 @@
-# .gitignore
+# Entornos virtuales
 venv/
+.venv/
 __pycache__/
 *.pyc
-.vscode/
+
+# Archivos de configuración locales
+.env
+
+# Archivos de bases de datos
+*.db
+
+# Directorios de compilación de Python
+*.egg-info/
+*.egg/
+dist/
+build/
+
+# Editores
+.idea
+.vscode
+
+# Archivos de claves
+/auth_keys
