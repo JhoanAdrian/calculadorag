@@ -1,12 +1,11 @@
 import numpy as np
 import sympy as sp
 
-def calcular_funcion(expresion, rango):
+def calcular_funcion(expresion, x_vals):
     try:
         x = sp.symbols('x')
         expr = sp.sympify(expresion)
         funcion = sp.lambdify(x, expr, "numpy")
-        x_vals = np.linspace(rango[0], rango[1], 100)  # Valor predeterminado de 100 puntos
         y_vals = funcion(x_vals)
         return {"x": x_vals.tolist(), "y": y_vals.tolist()}
     except Exception as e:
