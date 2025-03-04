@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 from pydantic import BaseModel
 from typing import List, Dict
-from funciones.funciones import calcular_funcion, calcular_derivada, calcular_aceleracion, calcular_valor_funcion, calcular_valor_derivada, calcular_valor_aceleracion
+from funciones.funciones import calcular_funcion, calcular_derivada, calcular_aceleracion, calcular_valor_funcion, calcular_expresion_derivada, calcular_valor_aceleracion
 
 app = FastAPI()
 
@@ -47,10 +47,10 @@ async def calcular_punto_endpoint(solicitud: SolicitudPunto):
     # Reemplazar ^ por ** en la expresión
     expresion = solicitud.expresion.replace('^', '**')
     
-    # Calcular el valor de la derivada
-    resultado_derivada = calcular_valor_derivada(expresion, solicitud.punto)
+    # Calcular la expresión de la derivada
+    resultado_derivada = calcular_expresion_derivada(expresion)
     
     # Reemplazar ** por ^ en la respuesta
-    resultado_derivada_str = str(resultado_derivada["y"]).replace('**', '^')
+    resultado_derivada_str = resultado_derivada["derivada"].replace('**', '^')
     
     return resultado_derivada_str

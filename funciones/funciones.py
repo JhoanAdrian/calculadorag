@@ -50,14 +50,12 @@ def calcular_valor_funcion(expresion, punto):
     except Exception as e:
         return {"error": str(e)}
 
-def calcular_valor_derivada(expresion, punto):
+def calcular_expresion_derivada(expresion):
     try:
         x = sp.symbols('x')
         expr = sp.sympify(expresion)
         derivada = sp.diff(expr, x)
-        funcion_derivada = sp.lambdify(x, derivada, "numpy")
-        y_val = funcion_derivada(punto)
-        return {"x": punto, "y": y_val}
+        return {"derivada": str(derivada)}
     except Exception as e:
         return {"error": str(e)}
 
