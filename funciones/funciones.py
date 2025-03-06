@@ -5,11 +5,19 @@ def calcular_funcion(expresion, x_vals):
     try:
         x = sp.symbols('x')
         expr = sp.sympify(expresion)
-        funcion = sp.lambdify(x, expr, "numpy")
-        y_vals = funcion(x_vals)
-        return {"x": x_vals.tolist(), "y": y_vals.tolist()}
+        if expr.is_constant():
+            y_vals = [float(expr)] * len(x_vals)
+        else:
+            funcion = sp.lambdify(x, expr, "numpy")
+            y_vals = funcion(x_vals)
+        # Asegurarse de que x_vals y y_vals sean arreglos de NumPy antes de llamar a tolist()
+        if isinstance(x_vals, np.ndarray):
+            x_vals = x_vals.tolist()
+        if isinstance(y_vals, np.ndarray):
+            y_vals = y_vals.tolist()
+        return {"x": x_vals, "y": y_vals}
     except Exception as e:
-        return {"error": str(e)}
+        return {"x": [], "y": [], "error": str(e)}
 
 def calcular_derivada(expresion, rango):
     try:
@@ -54,7 +62,10 @@ def calcular_expresion_derivada(expresion):
     try:
         x = sp.symbols('x')
         expr = sp.sympify(expresion)
-        derivada = sp.diff(expr, x)
+        if expr.is_constant():
+            derivada = 0
+        else:
+            derivada = sp.diff(expr, x)
         return {"derivada": str(derivada)}
     except Exception as e:
         return {"error": str(e)}

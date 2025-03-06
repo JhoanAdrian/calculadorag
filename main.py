@@ -37,8 +37,12 @@ async def calcular_rango_endpoint(solicitud: SolicitudRango):
     # Calcular los valores de la función
     resultado_funcion = calcular_funcion(expresion, x_vals)
     
+    # Verificar si hubo un error en el cálculo
+    if "error" in resultado_funcion:
+        return {"error": resultado_funcion["error"]}
+    
     # Crear la lista de coordenadas
-    coordenadas = [{"x": x, "y": y} for x, y in zip(x_vals, resultado_funcion["y"])]
+    coordenadas = [{"x": x, "y": y} for x, y in zip(resultado_funcion["x"], resultado_funcion["y"])]
     
     return coordenadas
 
